@@ -17,10 +17,15 @@ export const serverSchema = z.object({
     // Since NextAuth.js automatically uses the VERCEL_URL if present.
     (str) => process.env.VERCEL_URL ?? str,
     // VERCEL_URL doesn't include `https` so it cant be validated as a URL
-    process.env.VERCEL ? z.string() : z.string().url(),
+    process.env.VERCEL ? z.string() : z.string().url()
   ),
   DISCORD_CLIENT_ID: z.string(),
   DISCORD_CLIENT_SECRET: z.string(),
+  SQUARE_ACCESS_TOKEN: z.string(),
+  SQUARE_LOCATION_ID: z.string(),
+  SQUARE_APPLICATION_ID: z.string(),
+  SQUARE_ENVIRONMENT: z.enum(["Sandbox", "Production", "Custom"]),
+  SQUARE_CUSTOM_URL: z.string().optional(),
 });
 
 /**
@@ -35,6 +40,11 @@ export const serverEnv = {
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
   DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
+  SQUARE_ACCESS_TOKEN: process.env.SQUARE_ACCESS_TOKEN,
+  SQUARE_LOCATION_ID: process.env.SQUARE_LOCATION_ID,
+  SQUARE_APPLICATION_ID: process.env.SQUARE_APPLICATION_ID,
+  SQUARE_ENVIRONMENT: process.env.SQUARE_ENVIRONMENT,
+  SQUARE_CUSTOM_URL: process.env.SQUARE_CUSTOM_URL,
 };
 
 /**
