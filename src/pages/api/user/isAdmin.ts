@@ -20,6 +20,8 @@ const handler: NextApiHandler = async (req, res) => {
       );
       res.status(200).json({ isAdmin });
     });
+
+  res.status(401).json({ error: "Unauthorized" });
 };
 
 export default handler;
