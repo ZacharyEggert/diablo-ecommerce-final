@@ -55,6 +55,12 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  Admin         Admin[]
+}
+
+model Admin {
+  User   User   @relation(fields: [userId], references: [id])
+  userId String @unique
 }
 
 model VerificationToken {
@@ -63,4 +69,62 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Listing {
+  id                Int      @id @default(autoincrement())
+  reverbId          String?
+  reverbSku         String?
+  reverbSelfLink    String?
+  reverbImgImported Boolean? @default(false)
+  title             String
+  make              String?
+  model             String?
+  submodel          String?
+  year              String?
+  finish            String?
+  description       String
+  condition         String?
+  categories        String[]
+  price             Int
+  salePrice         Int?
+  cost              Int?
+  photos            String[]
+  slug              String
+  isSold            Boolean  @default(false)
+  isFeatured        Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @default(now())
+  orderId           Int?
+  Order             Order?   @relation(fields: [orderId], references: [id])
+}
+
+model Order {
+  id                   Int       @id @default(autoincrement())
+  BillingAddress       String
+  BillingAddress2      String
+  BillingCity          String
+  BillingState         String
+  BillingZip           String
+  BillingCountry       String
+  BillingPhone         String
+  BillingEmail         String
+  BillingFirstName     String
+  BillingLastName      String
+  BillingCompanyName   String
+  ShippingAddress      String
+  ShippingAddress2     String
+  ShippingCity         String
+  ShippingState        String
+  ShippingZip          String
+  ShippingCountry      String
+  ShippingPhone        String
+  ShippingEmail        String
+  ShippingFirstName    String
+  ShippingLastName     String
+  ShippingCompanyName  String
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @default(now())
+  Listing              Listing[]
+  squareIdempotencyKey String?
 }
